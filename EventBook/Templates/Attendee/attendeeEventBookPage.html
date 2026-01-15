@@ -1,0 +1,949 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Executive Leadership Summit 2024 - EventBook</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #000000;
+            background-color: #ffffff;
+            font-size: 16px;
+        }
+
+        /* Header */
+        .header {
+            background: #ffffff;
+            border-bottom: 1px solid #e5e5e5;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            transition: box-shadow 0.3s ease;
+        }
+
+        .header.scrolled {
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #000000;
+            text-decoration: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .logo:hover {
+            opacity: 0.7;
+        }
+
+        .logo-icon {
+            width: 32px;
+            height: 32px;
+            background: #000000;
+            border-radius: 4px;
+            margin-right: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            color: white;
+            font-size: 14px;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: #000000;
+            text-decoration: none;
+            font-weight: 400;
+            padding: 0.5rem 0;
+            border-bottom: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            border-bottom-color: #000000;
+        }
+
+        /* Main Content */
+        .main-content {
+            padding-top: 80px;
+            min-height: calc(100vh - 80px);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* Breadcrumb */
+        .breadcrumb {
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .breadcrumb a {
+            color: #666666;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.3s ease;
+        }
+
+        .breadcrumb a:hover {
+            color: #000000;
+        }
+
+        .breadcrumb span {
+            color: #cccccc;
+            margin: 0 0.5rem;
+        }
+
+        .breadcrumb .current {
+            color: #000000;
+            font-weight: 500;
+        }
+
+        /* Event Header */
+        .event-header {
+            margin-bottom: 3rem;
+        }
+
+        .event-title {
+            font-size: 2.5rem;
+            font-weight: 300;
+            color: #000000;
+            margin-bottom: 1rem;
+            letter-spacing: -0.02em;
+        }
+
+        .event-meta {
+            display: flex;
+            gap: 2rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            color: #666666;
+            font-size: 0.95rem;
+        }
+
+        .meta-icon {
+            margin-right: 0.5rem;
+            font-size: 1rem;
+        }
+
+        .event-price {
+            font-size: 2rem;
+            font-weight: 600;
+            color: #000000;
+            margin-bottom: 0.5rem;
+        }
+
+        .price-note {
+            color: #666666;
+            font-size: 0.9rem;
+        }
+
+        /* Event Content */
+        .event-content {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 4rem;
+            margin-bottom: 4rem;
+        }
+
+        .event-details {
+            background: #ffffff;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 500;
+            color: #000000;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid #e5e5e5;
+        }
+
+        .event-description {
+            color: #333333;
+            line-height: 1.7;
+            margin-bottom: 2rem;
+        }
+
+        .event-highlights {
+            margin-bottom: 2rem;
+        }
+
+        .highlights-list {
+            list-style: none;
+            margin-top: 1rem;
+        }
+
+        .highlights-list li {
+            padding: 0.5rem 0;
+            color: #333333;
+            position: relative;
+            padding-left: 1.5rem;
+        }
+
+        .highlights-list li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: #000000;
+            font-weight: 600;
+        }
+
+        .event-schedule {
+            margin-bottom: 2rem;
+        }
+
+        .schedule-item {
+            display: flex;
+            padding: 1rem 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .schedule-item:last-child {
+            border-bottom: none;
+        }
+
+        .schedule-time {
+            min-width: 100px;
+            font-weight: 500;
+            color: #000000;
+        }
+
+        .schedule-content {
+            flex: 1;
+            color: #333333;
+        }
+
+        /* Booking Section */
+        .booking-section {
+            background: #fafafa;
+            padding: 2rem;
+            border: 1px solid #e5e5e5;
+            position: sticky;
+            top: 100px;
+            height: fit-content;
+        }
+
+        .booking-title {
+            font-size: 1.25rem;
+            font-weight: 500;
+            color: #000000;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .booking-options {
+            display: flex;
+            margin-bottom: 2rem;
+            border-bottom: 1px solid #e5e5e5;
+        }
+
+        .booking-tab {
+            flex: 1;
+            padding: 1rem;
+            text-align: center;
+            background: transparent;
+            border: none;
+            color: #666666;
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-bottom: 2px solid transparent;
+        }
+
+        .booking-tab.active {
+            color: #000000;
+            border-bottom-color: #000000;
+        }
+
+        .booking-tab:hover {
+            color: #000000;
+        }
+
+        .booking-content {
+            min-height: 400px;
+        }
+
+        .booking-form {
+            display: block;
+        }
+
+        .booking-form.hidden {
+            display: none;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #000000;
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #cccccc;
+            background: #ffffff;
+            color: #000000;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #000000;
+            box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-input:hover {
+            border-color: #999999;
+        }
+
+        .ticket-selector {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .ticket-btn {
+            width: 40px;
+            height: 40px;
+            border: 1px solid #cccccc;
+            background: #ffffff;
+            color: #000000;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .ticket-btn:hover {
+            border-color: #000000;
+            background: #f5f5f5;
+        }
+
+        .ticket-count {
+            font-size: 1.1rem;
+            font-weight: 500;
+            min-width: 30px;
+            text-align: center;
+        }
+
+        .total-price {
+            background: #f5f5f5;
+            padding: 1rem;
+            margin: 1.5rem 0;
+            text-align: center;
+        }
+
+        .total-label {
+            color: #666666;
+            font-size: 0.9rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .total-amount {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #000000;
+        }
+
+        .book-btn {
+            width: 100%;
+            padding: 1rem;
+            background: #000000;
+            color: #ffffff;
+            border: none;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .book-btn:hover {
+            background: #333333;
+            transform: translateY(-1px);
+        }
+
+        /* QR Booking */
+        .qr-booking {
+            display: none;
+            text-align: center;
+        }
+
+        .qr-booking.active {
+            display: block;
+        }
+
+        .qr-code {
+            width: 200px;
+            height: 200px;
+            background: #000000;
+            margin: 2rem auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ffffff;
+            font-size: 0.8rem;
+            position: relative;
+        }
+
+        .qr-pattern {
+            width: 180px;
+            height: 180px;
+            background-image: 
+                linear-gradient(90deg, #ffffff 50%, transparent 50%),
+                linear-gradient(#ffffff 50%, transparent 50%);
+            background-size: 20px 20px;
+            opacity: 0.9;
+        }
+
+        .qr-instructions {
+            color: #666666;
+            font-size: 0.9rem;
+            line-height: 1.6;
+            margin-bottom: 2rem;
+        }
+
+        .qr-steps {
+            list-style: none;
+            text-align: left;
+            margin-top: 1rem;
+        }
+
+        .qr-steps li {
+            padding: 0.5rem 0;
+            color: #333333;
+            position: relative;
+            padding-left: 2rem;
+        }
+
+        .qr-steps li::before {
+            content: counter(step-counter);
+            counter-increment: step-counter;
+            position: absolute;
+            left: 0;
+            top: 0.5rem;
+            width: 1.5rem;
+            height: 1.5rem;
+            background: #000000;
+            color: #ffffff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .qr-steps {
+            counter-reset: step-counter;
+        }
+
+        /* Event Info Cards */
+        .info-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 3rem;
+        }
+
+        .info-card {
+            background: #fafafa;
+            padding: 1.5rem;
+            border: 1px solid #e5e5e5;
+            transition: all 0.3s ease;
+        }
+
+        .info-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .info-card h3 {
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: #000000;
+            margin-bottom: 0.5rem;
+        }
+
+        .info-card p {
+            color: #666666;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        /* Footer */
+        .footer {
+            background: #000000;
+            color: #ffffff;
+            padding: 3rem 2rem 1rem;
+            margin-top: 4rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 3rem;
+        }
+
+        .footer-section h3 {
+            font-size: 1rem;
+            font-weight: 500;
+            margin-bottom: 1rem;
+            color: #ffffff;
+        }
+
+        .footer-section p {
+            color: #cccccc;
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-section a {
+            color: #cccccc;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.3s ease;
+        }
+
+        .footer-section a:hover {
+            color: #ffffff;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid #333333;
+            margin-top: 2rem;
+            padding-top: 1rem;
+            text-align: center;
+            color: #999999;
+            font-size: 0.8rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav {
+                padding: 1rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .event-title {
+                font-size: 2rem;
+            }
+
+            .event-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .booking-section {
+                position: static;
+                margin-top: 2rem;
+            }
+
+            .event-meta {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+        }
+
+        @media (max-width: 1024px) {
+            .container {
+                padding: 1rem;
+            }
+
+            .event-content {
+                gap: 2rem;
+            }
+        }
+                #messages {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        width: 300px;
+        z-index: 9999;
+    }
+
+       .checkbox-group input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            border: 2px solid #000000;
+            background-color: #ffffff;
+        }
+
+        .checkbox-group label {
+            margin-bottom: 0;
+            font-weight: normal;
+            text-transform: none;
+            letter-spacing: normal;
+            cursor: pointer;
+        }
+   
+         /* Container at center-bottom */
+#toast-container {
+    position: fixed;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+/* Toast message box */
+.toast {
+    min-width: 220px;
+    max-width: 320px;
+    padding: 12px 20px;
+    border-radius: 6px;
+    color: #fff;
+    font-size: 14px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    opacity: 0;
+    transform: translateY(30px);
+    animation: toast-in 0.4s forwards;
+}
+
+/* Color variants */
+.toast.success { background: #28a745; }
+.toast.error   { background: #dc3545; }
+.toast.info    { background: #17a2b8; }
+.toast.warning { background: #ffc107; color: #000; }
+
+/* Slide in animation */
+@keyframes toast-in {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Fade out animation */
+@keyframes toast-out {
+    to {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+}
+
+ .login-as-guest {
+            background: #1d2956 !important;
+            color: white !important;
+            border: none;
+            padding: 0.7rem 1.5rem;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .login-as-guest:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(48, 65, 107, 0.4);
+        }
+
+    </style>
+</head>
+<body>
+    
+   {% if messages %}
+<div id="toast-container">
+    {% for message in messages %}
+        <div class="toast {{ message.tags }}">
+            {{ message }}
+        </div>
+    {% endfor %}
+</div>
+{% endif %}
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const toasts = document.querySelectorAll(".toast");
+        toasts.forEach(toast => {
+            setTimeout(() => {
+                toast.style.animation = "toast-out 0.5s forwards";
+                setTimeout(() => toast.remove(), 500);
+            }, 3000); // stays 4s
+        });
+    });
+</script>
+    <!-- Header -->
+    <header class="header" id="header">
+        <nav class="nav">
+            <a href="index.html" class="logo">
+                <div class="logo-icon">EB</div>
+                EventBook
+            </a>
+            <ul class="nav-links">
+                <li><a href="{% url 'home' %}">Back</a></li>
+                {% if request.user.is_authenticated %}
+                <li><a href="{% url 'logout' choice %}">Logout</a></li> 
+                <li><a href="{% url 'attendeeProfile'  %}">Profile</a></li>
+                {% else %}
+                <li><a href="{% url 'signUpGuest'  %}">Sign up</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container">
+            <!-- Breadcrumb -->
+            <nav class="breadcrumb">
+                <a href="{% url 'home' %}">Home</a>
+                <span>/</span>
+                <span class="current">{{event.event_name}}</span>
+            </nav>
+
+            <!-- Event Header -->
+            <div class="event-header">
+                <h1 class="event-title">{{event.event_name}}</h1>
+                <div class="event-meta">
+                    <div class="meta-item">
+                         <p style="color: black;text-decoration:underline;">START</p> <span class="meta-icon">📅</span>
+                       {{event.start_at}} • {{event.start_at}}
+                    </div>
+                      <div class="meta-item">
+                        <p style="color: black;text-decoration:underline;">END</p>  <span class="meta-icon">📅</span>
+                       {{event.end_at}} • {{event.end_at}}
+                    </div>
+                    <div class="meta-item">
+                        <span class="meta-icon">📍</span>
+                        {{event.location}} • {{event.venue}}
+                    </div>
+                    <div class="meta-item">
+                        <span class="meta-icon">🎫</span>
+                        {{event.tickets_avail}} tickets available
+                    </div>
+                </div>
+                <div class="event-price">${{event.price}}</div>
+                <div class="price-note">Per person • Includes materials and lunch</div>
+            </div>
+
+            <!-- Event Content -->
+            <div class="event-content">
+                <!-- Event Details -->
+                <div class="event-details">
+                    <section class="event-description">
+                        <h2 class="section-title">About This Event</h2>
+                        <p>{{event.descp}}</p>
+                       
+                    </section>
+
+                    
+                </div>
+
+                <!-- Booking Section -->
+                <div class="booking-section">
+                    <h3 class="booking-title">Book Your Tickets</h3>
+                    
+                    <div class="booking-options">
+                        <button class="booking-tab active" onclick="showBookingForm()">Form Booking</button>
+                        <button class="booking-tab" onclick="showQRBooking()">QR Booking</button>
+                    </div>
+
+                    <!-- Form Booking -->
+                    <div class="booking-form" id="formBooking">
+                        <form method="POST" action="{% url 'eventBook' event.id %}">
+                             {% csrf_token %}
+                            <div class="form-group">
+                                <label class="form-label">Username</label>
+                                {% if request.user.is_authenticated %}
+                                <input type="text" class="form-input" placeholder="Enter your username" value="{{user.username}}" name="username" readonly >
+                                {% else %}
+                                <input type="text" class="form-input" placeholder="Enter your username"  name="username" required>
+                                {% endif %}
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label">Password</label>
+                                <input type="password" class="form-input" placeholder="Enter your password" name="password"  required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label">Number of Tickets</label>
+                                <input type="number" class="form-input" placeholder="Enter no. of tickets" name="tickets"  required>
+                             
+                            </div>
+                                            <!-- Additional Information -->
+                            <div class="form-section">
+                                <h2>Additional Information</h2>
+
+                                <div class="checkbox-group">
+                                    <input type="checkbox" id="terms" name="terms" required>
+                                    <label for="terms">I agree to the EventBook Terms of Service that Booked Event  can cancelled within 24 hours of booking. <span class="required">*</span>
+                                    </label>
+                                </div>
+                        </div>
+                            <div class="total-price">
+                                <div class="total-label">Total Amount</div>
+                                <div class="total-amount" id="totalAmount">${{event.price}} per person</div>
+                            </div>
+                            
+                            <button type="submit" class="book-btn">Book Now</button>
+                        </form>
+                    </div>
+
+                    <!-- QR Booking -->
+                    <div class="qr-booking" id="qrBooking">
+                        <div class="qr-code">
+                            <div class="qr-pattern"></div>
+                        </div>
+                        
+                        <div class="qr-instructions">
+                            <p>Scan the QR code with your mobile device to book tickets instantly</p>
+                            
+                            <ol class="qr-steps">
+                                <li>Open your camera app or QR scanner</li>
+                                <li>Point your camera at the QR code</li>
+                                <li>Tap the notification to open booking page</li>
+                                <li>Complete your booking securely</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Additional Info Cards -->
+            <div class="info-cards">
+                <div class="info-card">
+                    <h3>Venue Information</h3>
+                    <p>Marriott Hotel New York features state-of-the-art conference facilities with modern AV equipment and comfortable seating arrangements.</p>
+                </div>
+                <div class="info-card">
+                    <h3>What's Included</h3>
+                    <p>Full access to all sessions, networking lunch, coffee breaks, event materials, and digital resources.</p>
+                </div>
+                <div class="info-card">
+                    <h3>Cancellation Policy</h3>
+                    <p>Full refund available up to 7 days before the event. 50% refund available up to 3 days before the event.</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+   <footer class="footer">
+        
+        <div class="footer-bottom">
+            <p>&copy; 2024 EventBook. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        let ticketCount = 1;
+        const ticketPrice = 299;
+
+        function showBookingForm() {
+            document.getElementById('formBooking').style.display = 'block';
+            document.getElementById('qrBooking').classList.remove('active');
+            document.querySelectorAll('.booking-tab')[0].classList.add('active');
+            document.querySelectorAll('.booking-tab')[1].classList.remove('active');
+        }
+
+        function showQRBooking() {
+            document.getElementById('formBooking').style.display = 'none';
+            document.getElementById('qrBooking').classList.add('active');
+            document.querySelectorAll('.booking-tab')[1].classList.add('active');
+            document.querySelectorAll('.booking-tab')[0].classList.remove('active');
+        }
+
+        function increaseTickets() {
+            if (ticketCount < 10) {
+                ticketCount++;
+                updateTicketDisplay();
+            }
+        }
+
+        function decreaseTickets() {
+            if (ticketCount > 1) {
+                ticketCount--;
+                updateTicketDisplay();
+            }
+        }
+
+        function updateTicketDisplay() {
+            document.getElementById('ticketCount').textContent = ticketCount;
+            document.getElementById('totalAmount').textContent = '$' + (ticketCount * ticketPrice);
+        }
+
+        // Header scroll effect
+        window.addEventListener('scroll', function() {
+            const header = document.getElementById('header');
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+    </script>
+</body>
+</html>

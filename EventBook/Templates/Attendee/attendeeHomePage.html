@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EventBook - Professional Event Management</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #000000;
+            background-color: #ffffff;
+            font-size: 16px;
+        }
+
+        /* Header */
+        .header {
+            background: #ffffff;
+            border-bottom: 1px solid #e5e5e5;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            transition: box-shadow 0.3s ease;
+        }
+
+        .header.scrolled {
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #000000;
+            text-decoration: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .logo:hover {
+            opacity: 0.7;
+        }
+
+        .logo-icon {
+            width: 32px;
+            height: 32px;
+            background: #000000;
+            border-radius: 4px;
+            margin-right: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            color: white;
+            font-size: 14px;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: #000000;
+            text-decoration: none;
+            font-weight: 400;
+            padding: 0.5rem 0;
+            border-bottom: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+
+        
+        .nav-links a:hover {
+            border-bottom-color: #000000;
+        }
+
+        
+
+        /* Hero Section */
+        .hero {
+            background: #ffffff;
+            padding: 120px 2rem 60px;
+            text-align: center;
+            border-bottom: 1px solid #e5e5e5;
+        }
+
+        .hero-content {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: 300;
+            margin-bottom: 1rem;
+            color: #000000;
+            letter-spacing: -0.02em;
+            animation: fadeInUp 0.8s ease;
+        }
+
+        .hero p {
+            font-size: 1.1rem;
+            color: #666666;
+            margin-bottom: 2rem;
+            font-weight: 300;
+            animation: fadeInUp 0.8s ease 0.2s both;
+        }
+
+        /* Events Section */
+        .events-section {
+            padding: 60px 2rem;
+            background: #ffffff;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #e5e5e5;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 400;
+            color: #000000;
+        }
+
+        .events-count {
+            color: #666666;
+            font-size: 0.9rem;
+        }
+
+        /* Event List */
+        .events-list {
+            background: #ffffff;
+        }
+
+        .event-item {
+            display: grid;
+            grid-template-columns: 1fr auto auto auto auto;
+            gap: 2rem;
+            padding: 1.5rem 0;
+            border-bottom: 1px solid #f0f0f0;
+            align-items: center;
+            transition: all 0.3s ease;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: slideInUp 0.6s ease forwards;
+        }
+
+        .event-item:nth-child(1) { animation-delay: 0.1s; }
+        .event-item:nth-child(2) { animation-delay: 0.2s; }
+        .event-item:nth-child(3) { animation-delay: 0.3s; }
+        .event-item:nth-child(4) { animation-delay: 0.4s; }
+        .event-item:nth-child(5) { animation-delay: 0.5s; }
+        .event-item:nth-child(6) { animation-delay: 0.6s; }
+
+        .event-item:hover {
+            background: #fafafa;
+            transform: translateX(8px);
+        }
+
+        .event-item:last-child {
+            border-bottom: none;
+        }
+
+        .event-info {
+            min-width: 0;
+        }
+
+        .event-title {
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: #000000;
+            margin-bottom: 0.25rem;
+            line-height: 1.4;
+        }
+
+        .event-date {
+            font-size: 0.9rem;
+            color: #666666;
+            margin-bottom: 0.25rem;
+        }
+
+        .event-location {
+            font-size: 0.9rem;
+            color: #999999;
+            display: flex;
+            align-items: center;
+        }
+
+        .event-location::before {
+            content: '📍';
+            margin-right: 0.5rem;
+            font-size: 0.8rem;
+        }
+
+        .event-tickets {
+            text-align: center;
+            min-width: 80px;
+        }
+
+        .tickets-label {
+            font-size: 0.8rem;
+            color: #666666;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.25rem;
+        }
+
+        .tickets-count {
+            font-size: 1rem;
+            font-weight: 500;
+            color: #000000;
+        }
+
+        .tickets-count.low {
+            color: #dc2626;
+        }
+
+        .event-price {
+            text-align: center;
+            min-width: 80px;
+        }
+
+        .price-label {
+            font-size: 0.8rem;
+            color: #666666;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.25rem;
+        }
+
+        .price-amount {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #000000;
+        }
+
+        .event-actions {
+            display: flex;
+            gap: 0.75rem;
+            min-width: 200px;
+            justify-content: flex-end;
+        }
+
+        .btn {
+            padding: 0.5rem 1rem;
+            border: 1px solid #000000;
+            background: transparent;
+            color: #000000;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 400;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+
+        .btn:hover {
+            background: #000000;
+            color: #ffffff;
+            transform: translateY(-1px);
+        }
+
+        .btn-primary {
+            background: #000000;
+            color: #ffffff;
+        }
+
+        .btn-primary:hover {
+            background: #333333;
+        }
+
+        .btn-secondary {
+            border-color: #cccccc;
+            color: #666666;
+        }
+
+        .btn-secondary:hover {
+            border-color: #000000;
+            color: #000000;
+            background: transparent;
+        }
+
+        /* Hidden Events */
+        .hidden-events {
+            display: none;
+        }
+
+        .hidden-events.show {
+            display: block;
+        }
+
+        /* Show More */
+        .show-more {
+            text-align: center;
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid #e5e5e5;
+        }
+
+        .show-more-btn {
+            background: transparent;
+            border: 1px solid #000000;
+            color: #000000;
+            padding: 0.75rem 2rem;
+            font-size: 0.9rem;
+            font-weight: 400;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .show-more-btn:hover {
+            background: #000000;
+            color: #ffffff;
+        }
+
+        /* Footer */
+        .footer {
+            background: #000000;
+            color: #ffffff;
+            padding: 3rem 2rem 1rem;
+            margin-top: 4rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 3rem;
+        }
+
+        .footer-section h3 {
+            font-size: 1rem;
+            font-weight: 500;
+            margin-bottom: 1rem;
+            color: #ffffff;
+        }
+
+        .footer-section p {
+            color: #cccccc;
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-section a {
+            color: #cccccc;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.3s ease;
+        }
+
+        .footer-section a:hover {
+            color: #ffffff;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid #333333;
+            margin-top: 2rem;
+            padding-top: 1rem;
+            text-align: center;
+            color: #999999;
+            font-size: 0.8rem;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav {
+                padding: 1rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .event-item {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+                text-align: left;
+            }
+
+            .event-actions {
+                justify-content: flex-start;
+                min-width: auto;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+        }
+
+        @media (max-width: 1024px) {
+            .event-item {
+                grid-template-columns: 1fr auto auto;
+                gap: 1.5rem;
+            }
+
+            .event-tickets,
+            .event-price {
+                min-width: 60px;
+            }
+        }
+
+                #messages {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        width: 300px;
+        z-index: 9999;
+    }
+
+   
+         /* Container at center-bottom */
+#toast-container {
+    position: fixed;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+/* Toast message box */
+.toast {
+    min-width: 220px;
+    max-width: 320px;
+    padding: 12px 20px;
+    border-radius: 6px;
+    color: #fff;
+    font-size: 14px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    opacity: 0;
+    transform: translateY(30px);
+    animation: toast-in 0.4s forwards;
+}
+
+/* Color variants */
+.toast.success { background: #28a745; }
+.toast.error   { background: #dc3545; }
+.toast.info    { background: #17a2b8; }
+.toast.warning { background: #ffc107; color: #000; }
+
+/* Slide in animation */
+@keyframes toast-in {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Fade out animation */
+@keyframes toast-out {
+    to {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+}
+
+
+
+    </style>
+</head>
+<body>
+    
+   {% if messages %}
+<div id="toast-container">
+    {% for message in messages %}
+        <div class="toast {{ message.tags }}">
+            {{ message }}
+        </div>
+    {% endfor %}
+</div>
+{% endif %}
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const toasts = document.querySelectorAll(".toast");
+        toasts.forEach(toast => {
+            setTimeout(() => {
+                toast.style.animation = "toast-out 0.5s forwards";
+                setTimeout(() => toast.remove(), 500);
+            }, 3000); // stays 4s
+        });
+    });
+</script>
+    <!-- Header -->
+    <header class="header" id="header">
+        <nav class="nav">
+            <a href="#" class="logo">
+                <div class="logo-icon">EB</div>
+                EventBook
+            </a>
+            <ul class="nav-links">
+                {% if not request.user.is_authenticated %}
+                 <li><a href="{% url 'signUpGuest' %}">Sign up</a></li>
+                {% else %}
+                <li><a href="{% url 'logout' choice %}">Logout</a></li>
+                <li><a href="{% url 'attendeeProfile'  %}">Profile</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Professional Event Management</h1>
+            <p>Discover and book premium events with our streamlined platform designed for professionals.</p>
+        </div>
+    </section>
+
+    <!-- Events Section -->
+    <section class="events-section" id="events">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Upcoming Events</h2>
+                <span class="events-count">{{total}} events available</span>
+            </div>
+
+            <div class="events-list">
+                <!-- Event 1 -->
+
+                 {% for event in events %}
+                 {% if event.is_active %}
+                <div class="event-item">
+                    <div class="event-info">
+                        <div class="event-title">{{event.event_name}}</div>
+                        <div class="event-date">{{event.start_date}}</div>
+                        <div class="event-location">{{event.venue}}</div>
+                    </div>
+                    <div class="event-tickets">
+                        <div class="tickets-label">Available</div>
+                        <div class="tickets-count">{{event.tickets_avail}}</div>
+                    </div>
+                    <div class="event-price">
+                        <div class="price-label">Price</div>
+                        <div class="price-amount">${{event.price}}</div>
+                    </div>
+                    <div class="event-actions">
+                        <a href="{% url 'showDetails' event.id %}" class="btn btn-secondary">Details</a>
+                        <a href="{% url 'showEvent' event.id %}" class="btn btn-primary">Book Now</a>
+                    </div>
+                </div>
+                {% else %}
+                  <div class="event-item dull">
+                    <div class="event-info">
+                        <div class="event-title">{{event.event_name}}</div>
+                        <div class="event-date">{{event.start_date}}</div>
+                        <div class="event-location">{{event.venue}}</div>
+                    </div>
+                    <div class="event-tickets">
+                        <div class="tickets-label">Available</div>
+                        <div class="tickets-count">{{event.tickets_avail}}</div>
+                    </div>
+                    <div class="event-price">
+                        <div class="price-label">Price</div>
+                        <div class="price-amount">${{event.price}}</div>
+                    </div>
+                    <div class="event-actions" style="margin-right: 80px;">
+                        <a href="{% url 'showDetails' event.id %}" class="btn btn-secondary">Details</a>
+                    </div>
+                </div>
+                {% endif %}
+                 {% endfor %}
+                
+                </div>
+            </div>
+
+            <div class="show-more">
+                <button class="show-more-btn" onclick="showMoreEvents()">Show More Events</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+   <footer class="footer">
+        
+        <div class="footer-bottom">
+            <p>&copy; 2024 EventBook. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Show more events functionality
+        function showMoreEvents() {
+            const hiddenEvents = document.getElementById('hiddenEvents');
+            const showMoreBtn = document.querySelector('.show-more-btn');
+            
+            hiddenEvents.classList.add('show');
+            showMoreBtn.style.display = 'none';
+            
+            // Animate new events
+            const newEvents = hiddenEvents.querySelectorAll('.event-item');
+            newEvents.forEach((event, index) => {
+                event.style.opacity = '0';
+                event.style.transform = 'translateY(20px)';
+                setTimeout(() => {
+                    event.style.transition = 'all 0.6s ease';
+                    event.style.opacity = '1';
+                    event.style.transform = 'translateY(0)';
+                }, index * 100);
+            });
+        }
+
+        // Header scroll effect
+        window.addEventListener('scroll', function() {
+            const header = document.getElementById('header');
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
