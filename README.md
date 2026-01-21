@@ -23,11 +23,7 @@
 ---
 
 ## Screenshots
-
 ![EventBook Screenshot](Screenshot.png)  
-*Replace `screenshot.png` with your actual screenshot file*
-
----
 
 ## Installation
 
