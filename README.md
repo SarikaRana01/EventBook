@@ -24,7 +24,7 @@
 
 ## Screenshots
 
-![EventBook Screenshot](screenshot.png)  
+![EventBook Screenshot](Screenshot.png)  
 *Replace `screenshot.png` with your actual screenshot file*
 
 ---
